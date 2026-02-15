@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #1e0f06;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    padding: 24px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(210,145,80,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    animation: pulse 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { opacity: 0.6; }
+    to   { opacity: 1.0; }
+  }
+
+  .particles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: #e8c070;
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(105vh); opacity: 0; }
+    15%  { opacity: 0.5; }
+    85%  { opacity: 0.25; }
+    100% { transform: translateY(-5vh) translateX(30px); opacity: 0; }
+  }
+
+  .card {
+    position: relative;
+    width: min(500px, 100%);
+    background: #fdf6ee;
+    padding: 52px 44px 60px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(180,120,60,0.2);
+    animation: cardIn 1.4s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card::before, .card::after,
+  .br::before, .br::after {
+    content: '';
+    position: absolute;
+    width: 40px; height: 40px;
+    border: 1px solid #b87840;
+    opacity: 0.4;
+  }
+  .card::before { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
+  .card::after  { top: 14px; right: 14px; border-width: 1px 1px 0 0; }
+  .br::before   { bottom: 14px; left: 14px; border-width: 0 0 1px 1px; }
+  .br::after    { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
+
+  .title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.6rem;
+    color: #9a5e28;
+    letter-spacing: 0.14em;
+    text-align: center;
+    margin-bottom: 8px;
+    animation: up 0.9s ease 0.5s both;
+  }
+
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 160px;
+    margin: 0 auto 36px;
+    animation: up 0.9s ease 0.65s both;
+  }
+  .rule-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, #b87840, transparent); }
+  .rule-dot  { width: 4px; height: 4px; border-radius: 50%; background: #b87840; }
+
+  .stanza {
+    margin-bottom: 28px;
+    animation: up 0.9s ease both;
+  }
+  .stanza:nth-of-type(1) { animation-delay: 0.8s; }
+  .stanza:nth-of-type(2) { animation-delay: 1.15s; }
+
+  .ln {
+    display: block;
+    font-size: 1.06rem;
+    font-weight: 400;
+    color: #1c0e06;
+    line-height: 1.9;
+  }
+  .ln.in  { padding-left: 1.6em; }
+  .ln.it  { font-style: italic; color: #4a2c14; }
+  .ln.itb { font-style: italic; font-weight: 600; color: #1c0e06; }
+
+  .sign {
+    text-align: right;
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 0.98rem;
+    color: #6b3d18;
+    animation: up 0.9s ease 1.45s both;
+  }
+
+  .ornament {
+    text-align: center;
+    color: #b87840;
+    font-size: 1rem;
+    letter-spacing: 0.45em;
+    margin-top: 30px;
+    animation: up 0.9s ease 1.65s both;
+  }
+
+  .date-stamp {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    color: #b87840;
+    opacity: 0.5;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="card">
+  <div class="br"></div>
+
+  <div class="title">Glow</div>
+
+  <div class="rule">
+    <div class="rule-line"></div>
+    <div class="rule-dot"></div>
+    <div class="rule-line"></div>
+  </div>
+
+  <div class="stanza">
+    <span class="ln">Once I looked at her, back when we were barely care-free,</span>
+    <span class="ln in">back when we each could go left or right —</span>
+    <span class="ln">life was simple then, wake work repeat,</span>
+    <span class="ln in">our lives still distant, her breath still not known.</span>
+    <br>
+    <span class="ln">She radiated, that glow in a dark room.</span>
+    <span class="ln">A pale glow, but a glow none the less.</span>
+    <span class="ln">I saw her — she was different,</span>
+    <span class="ln in it">a person the person I saw,</span>
+    <span class="ln">and I fixated on her</span>
+    <span class="ln in itb">like a moth to flame.</span>
+  </div>
+
+  <div class="stanza">
+    <span class="ln">Last night after supper I looked at her —</span>
+    <span class="ln in it">oh that glow —</span>
+    <span class="ln">how it's so bright now,</span>
+    <span class="ln">her face so precious, beautiful,</span>
+    <span class="ln in">the only face I need.</span>
+    <br>
+    <span class="ln">Her glow only gets brighter</span>
+    <span class="ln in">year after year.</span>
+    <br>
+    <span class="ln">I will always be a moth</span>
+    <span class="ln in">fixated on that flame —</span>
+    <span class="ln itb">oh how I love that woman.</span>
+  </div>
+
+  <div class="sign">— always yours</div>
+  <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="date-stamp">Valentine's Day · 2026</div>
+</div>
+
+<script>
+  const c = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const s = Math.random() * 2 + 1;
+    p.style.cssText = 'left:' + (Math.random()*100) + '%;width:' + s + 'px;height:' + s + 'px;animation-duration:' + (Math.random()*14+9) + 's;animation-delay:' + (Math.random()*14) + 's;';
+    c.appendChild(p);
+  }
+</script>
+</body>
+</html>
